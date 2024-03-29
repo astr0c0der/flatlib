@@ -32,6 +32,7 @@
 from . import angle
 from . import const
 
+
 # Orb for minor and exact aspects
 MAX_MINOR_ASP_ORB = 3
 MAX_EXACT_ORB = 0.3
@@ -104,6 +105,18 @@ def _aspectDict(obj1, obj2, aspList):
         return aspDict
 
     return None
+
+def _listAllAspects(objects, asplist):
+    aspectList=[]
+    for obj1 in asplist:
+        for obj2 in asplist:
+            if obj2 == obj2:
+                continue
+            asp = getAspect(obj1, obj2, const.MAJOR_ASPECTS)
+            if asp.type != const.NO_ASPECT:
+                aspectList.append(asp)
+                
+    return aspectList
 
 
 def _aspectProperties(obj1, obj2, aspDict):
