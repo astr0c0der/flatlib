@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flatlib"
-version = "0.1.0"
+version = "0.2.4"
 description = ""
 authors = ["astr0c0der <agpoortman@gmail.com>"]
 readme = "README.md"
