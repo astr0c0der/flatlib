@@ -16,6 +16,7 @@ from . import swe
 from . import tools
 from flatlib import angle
 from flatlib import const
+from flatlib import utils
 
 
 # === Objects === #
@@ -29,7 +30,7 @@ def getObject(ID, jd, lat, lon):
         obj = swe.sweObject(const.NORTH_NODE, jd)
         obj.update({
             'id': const.SOUTH_NODE,
-            'lon': angle.norm(obj['lon'] + 180)
+            'lon': angle.norm(obj['lon'] + 180),
         })
     elif ID == const.PARS_FORTUNA:
         pflon = tools.pfLon(jd, lat, lon)
@@ -120,5 +121,6 @@ def _signInfo(obj):
     lon = obj['lon']
     obj.update({
         'sign': const.LIST_SIGNS[int(lon / 30)],
-        'signlon': lon % 30
+        'signlon': lon % 30,
+        'dms': utils.decimal_to_dms(lon)
     })

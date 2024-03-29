@@ -12,6 +12,7 @@
 """
 
 from . import aspects
+from . import const
 
 
 # ---------------- #

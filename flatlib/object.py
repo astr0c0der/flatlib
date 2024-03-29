@@ -33,6 +33,7 @@ class GenericObject:
         self.lat = 0.0
         self.sign = const.ARIES
         self.signlon = 0.0
+        self.dms = 0.0
 
     @classmethod
     def fromDict(cls, _dict):
@@ -46,10 +47,11 @@ class GenericObject:
         return self.fromDict(self.__dict__)
 
     def __str__(self):
-        return '<%s %s %s>' % (
+        return '%s %s %s %s' % (
             self.id,
             self.sign,
-            angle.toString(self.signlon)
+            angle.toString(self.signlon),
+            utils.decimal_to_dms(self.lon)
         )
 
     # === Properties === #
@@ -112,7 +114,7 @@ class Object(GenericObject):
 
     def __str__(self):
         string = super().__str__()[:-1]
-        return '%s %s>' % (
+        return '%s %s' % (
             string,
             angle.toString(self.lonspeed)
         )
@@ -187,7 +189,7 @@ class House(GenericObject):
 
     def __str__(self):
         string = super().__str__()[:-1]
-        return '%s %s>' % (
+        return '%s %s' % (
             string,
             self.size
         )
@@ -239,7 +241,7 @@ class FixedStar(GenericObject):
 
     def __str__(self):
         string = super().__str__()[:-1]
-        return '%s %s>' % (
+        return '%s %s' % (
             string,
             self.mag
         )

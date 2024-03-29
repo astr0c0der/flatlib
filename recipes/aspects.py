@@ -27,9 +27,9 @@ chart = Chart(date, pos, IDs=const.LIST_OBJECTS)
 sun = chart.get(const.SUN)
 moon = chart.get(const.MOON)
 
-
+# single aspect (only objects that are IDs=[const list]
 aspect = aspects.getAspect(sun, moon, const.MAJOR_ASPECTS)
-print(aspect) # <Moon Sun 90 Applicative +00:24:30>
+print(aspect) # Moon Sun 90 Applicative +00:24:30
 
 
 # Print list with aspects of all objects
@@ -39,19 +39,7 @@ print(aspect) # <Moon Sun 90 Applicative +00:24:30>
 # const.MINOR_APSECTS
 # const.ALL_ASPECTS
 # To choose which objects to calculate the aspects
-# const.LIST_OBJECTS
-# const.LIST_OBJECTS_TRADITIONAL
-# const.LIST_SEVEN_PLANETS
+all_aspects = aspects.getAllAspects(chart.objects, const.MAJOR_ASPECTS)
+for aspect in all_aspects:
+    print(aspect)
 
-for planet1 in const.LIST_OBJECTS: # creates main loop for the first planet
-    for planet2 in const.LIST_OBJECTS: # a nested loop for the second planet.
-
-        obj1 = chart.getObject(planet1) # create planet object 1
-        obj2 = chart.getObject(planet2) # create planet object 2
-        
-        if obj1 == obj2: # check for not aspecting itself, else continue
-            continue
-
-        asp = aspects.getAspect(obj1, obj2, const.MAJOR_ASPECTS) # calculate aspect
-        if asp.type != const.NO_ASPECT: # If result is not -1, its bingo we have an aspect.
-            print(asp) # printing our results

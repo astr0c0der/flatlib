@@ -31,6 +31,8 @@
 
 from . import angle
 from . import const
+from . import props
+from . import utils
 
 
 # Orb for minor and exact aspects
@@ -105,19 +107,6 @@ def _aspectDict(obj1, obj2, aspList):
         return aspDict
 
     return None
-
-def _listAllAspects(objects, asplist):
-    aspectList=[]
-    for obj1 in asplist:
-        for obj2 in asplist:
-            if obj2 == obj2:
-                continue
-            asp = getAspect(obj1, obj2, const.MAJOR_ASPECTS)
-            if asp.type != const.NO_ASPECT:
-                aspectList.append(asp)
-                
-    return aspectList
-
 
 def _aspectProperties(obj1, obj2, aspDict):
     """ Returns the properties of an aspect between
@@ -242,6 +231,9 @@ def isAspecting(obj1, obj2, aspList):
         return aspDict['orb'] < obj1.orb()
     return False
 
+def aspectName(degrees):
+    return const.ALL_ASPECTS.get(degrees)
+
 
 def getAspect(obj1, obj2, aspList):
     """ Returns an Aspect object for the aspect between two
@@ -258,6 +250,18 @@ def getAspect(obj1, obj2, aspList):
         }
     aspProp = _aspectProperties(ap['active'], ap['passive'], aspDict)
     return Aspect(aspProp)
+
+def getAllAspects(objList, aspList):
+    aspect_list=[]
+    for obj1 in objList: # creates main loop for the first planet
+        for obj2 in objList: # a nested loop for the second planet. # create planet object 2        
+            if obj1 == obj2: # check for not aspecting itself, else continue
+                continue
+
+            asp = getAspect(obj1, obj2, aspList) # calculate aspect
+            if asp.type != const.NO_ASPECT: # If result is not -1, its bingo we have an aspect.
+                aspect_list.append(asp) # printing our results
+    return aspect_list
 
 
 # ---------------- #
@@ -341,8 +345,8 @@ class Aspect:
         return role['inOrb'] if role else None
 
     def __str__(self):
-        return '<%s %s %s %s %s>' % (self.active.id,
+        return '%s %s %s %s %s' % (self.active.id,
                                      self.passive.id,
-                                     self.type,
+                                     props.aspect.name.get(self.type) + ' (' + str(self.type) +')',
                                      self.active.movement,
                                      angle.toString(self.orb))

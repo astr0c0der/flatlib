@@ -68,7 +68,7 @@ def sweObject(obj, jd):
         'lon': sweList[0],
         'lat': sweList[1],
         'lonspeed': sweList[3],
-        'latspeed': sweList[4]
+        'latspeed': sweList[4],
     }
 
 

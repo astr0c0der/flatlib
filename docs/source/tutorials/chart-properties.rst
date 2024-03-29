@@ -136,43 +136,6 @@ To retrieve fixed stars from the chart, we must use the *getFixedStar* method::
 
 The list of avaliable fixed stars are defined in the `source code`_. 
 
-Lists
------
-
-In some cases, instead of retrieving objects, houses or angles one by one, it may be useful to get direct access to
-their lists. The *chart* object provides the following lists:
-
-* *chart.objects*, with a list of all objects
-* *chart.houses*, with a list of all houses
-* *chart.angles*, with a list of all angles
- 
-The following example uses the ``for`` command to iterate over all objects in the list of objects::
-
-   >>> for obj in chart.objects:
-   ...     print(obj)
-   ...
-   <Moon Sagittarius +22:22:54 +13:16:01>
-   <Venus Aries +25:30:11 +01:12:41>
-   <Saturn Sagittarius +04:55:45 +00:00:06>
-   <Mercury Pisces +00:48:57 +01:29:49>
-   <North Node Libra +11:08:28 -00:03:11>
-   <Syzygy Virgo +14:50:23 +11:48:44>
-   <Sun Pisces +22:47:25 +00:59:51>
-   <South Node Aries +11:08:28 -00:03:11>
-   <Pars Fortuna Gemini +03:03:00 +00:00:00>
-   <Mars Aries +16:32:48 +00:45:18>
-   <Jupiter Leo +13:38:37 -00:04:45>
-   
-Lists also provides us with useful functions. 
-For instance, the house list provides a function to retrieve the house where an object is::
-
-   >>> house = chart.houses.getObjectHouse(sun)
-   >>> print(house)
-   <House7 Pisces +03:27:30 29.39933122126604>
-   
-In this specific case, the sun is in the 7th house. 
-The `lists.py`_ file provides a full overview of what is available for each list.  
-
 
 Chart functions
 ---------------

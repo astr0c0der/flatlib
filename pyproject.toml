@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "flatlib"
+version = "0.1.0"
+description = ""
+authors = ["astr0c0der <agpoortman@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pyswisseph = "^2.10.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
