@@ -133,6 +133,7 @@ def _aspectProperties(obj1, obj2, aspDict):
     }
     prop = {
         'type': asp,
+        'name': aspectName(asp),
         'orb': orb,
         'direction': -1,
         'condition': -1,
@@ -232,7 +233,7 @@ def isAspecting(obj1, obj2, aspList):
     return False
 
 def aspectName(degrees):
-    return const.ALL_ASPECTS.get(degrees)
+    return props.aspect.name.get(degrees)
 
 
 def getAspect(obj1, obj2, aspList):

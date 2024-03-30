@@ -18,4 +18,4 @@ for house in chart.houses:
 # for a list with objects in the houses
 for obj in chart.objects:
     house = chart.houses.getObjectHouse(obj)
-    print(f"The object {obj.id} is in {house.lon}")
+    print(f"The object {obj.id} is in {house.id}")
