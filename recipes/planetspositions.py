@@ -40,7 +40,7 @@ print (f"""
          {sun.signlon}
          {sun.lonspeed}
          {sun.dms}
-         {sun.movement}
+         {sun.movement()}
          {sun.orb()}
          {sun.element()}
          {sun.inElement()}

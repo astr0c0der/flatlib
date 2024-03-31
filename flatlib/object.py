@@ -34,7 +34,6 @@ class GenericObject:
         self.sign = const.ARIES
         self.signlon = 0.0
         self.dms = 0
-        self.movement = const.DIRECT
         
         
 
