@@ -222,6 +222,10 @@ class House(GenericObject):
     def gender(self):
         """ Returns the gender of this house. """
         return props.house.gender[self.id]
+    
+    def inElement(self):
+
+        return props.house.element[self.id]
         
 
     # === Functions === #

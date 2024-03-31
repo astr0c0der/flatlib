@@ -12,8 +12,13 @@ pos = GeoPos('38n32', '8w54')
 # Get the chart
 chart = Chart(date, pos, hsys=const.HOUSES_PLACIDUS)
 
-for house in chart.houses:
-    print(house)
+for hse in const.LIST_HOUSES:
+    house = chart.getHouse(hse)
+    print(house.id)
+    print(house.lon)
+    print(house.lat)
+    print(house.sign)
+    print(house.inElement())
 
 # for a list with objects in the houses
 for obj in chart.objects:

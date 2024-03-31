@@ -322,6 +322,21 @@ class house:
         const.HOUSE4, const.HOUSE5, const.HOUSE6
     ]
 
+    element = { 
+        const.HOUSE1: const.FIRE,
+        const.HOUSE2: const.EARTH,
+        const.HOUSE3: const.AIR,
+        const.HOUSE4: const.WATER,
+        const.HOUSE5: const.FIRE,
+        const.HOUSE6: const.EARTH,
+        const.HOUSE7: const.AIR,
+        const.HOUSE8: const.WATER,
+        const.HOUSE9: const.FIRE,
+        const.HOUSE10: const.EARTH,
+        const.HOUSE11: const.AIR,
+        const.HOUSE12: const.WATER
+    }
+
 
 # --------------------- #
 #   Aspect Properties   #
