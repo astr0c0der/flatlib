@@ -322,6 +322,21 @@ class house:
         const.HOUSE4, const.HOUSE5, const.HOUSE6
     ]
 
+    names = {
+        const.HOUSE1: const.FIRSTHOUSE,
+        const.HOUSE2: const.SECONDHOUSE,
+        const.HOUSE3: const.THIRDHOUSE,
+        const.HOUSE4: const.FOURTHHOUSE,
+        const.HOUSE5: const.FIFTHHOUSE,
+        const.HOUSE6: const.SIXTHHOUSE,
+        const.HOUSE7: const.SEVENTHHOUSE,
+        const.HOUSE8: const.EIGHTHHOUSE,
+        const.HOUSE9: const.NINETHHOUSE,
+        const.HOUSE10: const.TENTHHOUSE,
+        const.HOUSE11: const.ELEVENTHHOUSE,
+        const.HOUSE12: const.TWELFTHOUSE
+        }
+
     element = { 
         const.HOUSE1: const.FIRE,
         const.HOUSE2: const.EARTH,
