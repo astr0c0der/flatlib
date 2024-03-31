@@ -33,7 +33,10 @@ class GenericObject:
         self.lat = 0.0
         self.sign = const.ARIES
         self.signlon = 0.0
-        self.dms = 0.0
+        self.dms = 0
+        self.movement = const.DIRECT
+        
+        
 
     @classmethod
     def fromDict(cls, _dict):
@@ -151,7 +154,12 @@ class Object(GenericObject):
 
     def element(self):
         """ Returns the element of this object. """
-        return props.object.element[self.id]
+        if self.id in const.LIST_SEVEN_PLANETS:
+            return props.object.element[self.id] 
+    
+    def inElement(self):
+        """ Returns the element of the sign this object is in. """
+        return props.sign.element[self.sign]
 
     # === Functions === #
 
@@ -170,6 +178,10 @@ class Object(GenericObject):
     def isFast(self):
         """ Returns if this object is in fast motion. """
         return abs(self.lonspeed) >= self.meanMotion()
+
+
+
+
 
 
 # ------------------ #
@@ -210,6 +222,7 @@ class House(GenericObject):
     def gender(self):
         """ Returns the gender of this house. """
         return props.house.gender[self.id]
+        
 
     # === Functions === #
 

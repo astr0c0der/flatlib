@@ -9,6 +9,7 @@
 
 from flatlib import aspects # needed for aspect calculations
 from flatlib import const # constant variables
+from flatlib import props
 from flatlib.chart import Chart # needed for chart
 from flatlib.datetime import Datetime # datetime
 from flatlib.geopos import GeoPos # geolocation
@@ -23,16 +24,29 @@ pos = GeoPos('38n32', '8w54')
 chart = Chart(date, pos, IDs=const.LIST_OBJECTS)
 
 # get single planet positions
+# id = name 
+# lon = longitude decimals 
+# lat = latitude decimals
+# sign = sign, signlon = longitude position in sign 
+# lonspeed = longitude speed 
+# dms = decimal to dms 
+# movement = planet movement
 sun = chart.getObject(const.SUN)
 print (f""" 
-    Sun: {sun.id}
+    Sun: {sun.id} 
          {sun.lon}
          {sun.lat}
          {sun.sign}
          {sun.signlon}
          {sun.lonspeed}
          {sun.dms}
+         {sun.movement}
+         {sun.orb()}
+         {sun.element()}
+         {sun.inElement()}
+
 """)
 
+
 for obj in chart.objects:
-    print (f"{obj.id}: {obj.id} {obj.lon} {obj.lat} {obj.sign} {obj.signlon} {obj.lonspeed}")
+    print (f"{obj.id}: name: {obj.id} \n longitude {obj.lon} \n latitude {obj.lat} \n sign {obj.sign} \n longitude in sign{obj.signlon} \n longitude speed: {obj.lonspeed} \n planet element: {obj.element()} \n sign element: {obj.inElement()} ")

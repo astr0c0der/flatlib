@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "flatlib"
-version = "0.2.5"
+version = "0.2.6"
 description = ""
-authors = ["astr0c0der <agpoortman@gmail.com>"]
+authors = ["João Ventura"]
 readme = "README.md"
 
 [tool.poetry.dependencies]

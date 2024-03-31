@@ -19,6 +19,7 @@
 from . import const
 
 
+
 # ------------------- #
 #   Base Properties   #
 # ------------------- #
@@ -170,6 +171,20 @@ class sign:
         const.LEO
     ]
 
+    fertility = {
+        const.ARIES: const.FIRE,
+        const.TAURUS: const.EARTH,
+        const.GEMINI: const.AIR,
+        const.CANCER: const.WATER,
+        const.LEO: const.FIRE,
+        const.VIRGO: const.EARTH,
+        const.LIBRA: const.AIR,
+        const.SCORPIO: const.WATER,
+        const.SAGITTARIUS: const.FIRE,
+        const.CAPRICORN: const.EARTH,
+        const.AQUARIUS: const.AIR,
+        const.PISCES: const.WATER
+    }
 
 # --------------------- #
 #   Object Properties   #
@@ -223,7 +238,7 @@ class object:
         const.SUN: const.FIRE,
         const.VENUS: const.AIR,
         const.MERCURY: const.EARTH,
-        const.MOON: const.WATER
+        const.MOON: const.WATER,
     }
 
     # Planet temperaments

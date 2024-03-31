@@ -4,7 +4,7 @@ Tutorials
 .. toctree::
    :maxdepth: 2
 
-   intro-python
+   intro-flatlib
    create-chart
    chart-properties
    list-objects

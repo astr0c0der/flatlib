@@ -12,7 +12,7 @@ The following example uses the ``for`` command to iterate over all objects in th
 and displays the objects in the signs::
 
    >>> for obj in chart.objects:
-   ...     print(obj)
+   >>>     print(obj)
    ...
    <Moon Sagittarius +22:22:54 +13:16:01>
    <Venus Aries +25:30:11 +01:12:41>
@@ -27,6 +27,7 @@ and displays the objects in the signs::
    <Jupiter Leo +13:38:37 -00:04:45>
 
 The same can be done with the house positions::
+
    >>> for house in chart.houses:
    ...   print(house)
    ...
@@ -49,8 +50,7 @@ For instance, the house list provides a function to retrieve the house where an 
    # for a list with objects in the houses
    >>> for obj in chart.objects:
    >>>   house = chart.houses.getObjectHouse(obj)
-   >>>   print(f"The object {obj.id} is in {house}")
+   >>>   print(f"The object {obj.id} is in {house.id}")
    
    
-In this specific case, the sun is in the 7th house. 
-The `lists.py`_ file provides a full overview of what is available for each list.  
+
