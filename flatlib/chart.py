@@ -49,7 +49,7 @@ class Chart:
 
         self.date = date
         self.pos = pos
-        self.hsys = hsys
+        self.hsys = hsys.encode('utf-8')
         self.objects = ephem.getObjectList(IDs, date, pos)
         self.houses, self.angles = ephem.getHouses(date, pos, hsys)
 

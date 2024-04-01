@@ -77,27 +77,27 @@ def eqCoords(lon, lat):
     return (math.degrees(ra), math.degrees(decl))
 
 def decimal_to_dms(longitude):
-        """
-        Convert a decimal longitude value to degrees, minutes, and seconds format.
+    """
+    Convert a decimal longitude value to degrees, minutes, and seconds format.
 
-        Parameters:
-        - longitude (float): The decimal longitude value to convert.
+    Parameters:
+    - longitude (float): The decimal longitude value to convert.
 
-        Returns:
-        - str: The longitude in degrees, minutes, and seconds format (e.g., "35° 30' 15").
-        """
-        sign_num = int(longitude // 30)
-        pos_in_sign = longitude - (sign_num * 30)
-        deg = int(pos_in_sign)
-        full_min = (pos_in_sign - deg) * 60
-        minute = int(full_min)
-        full_sec = round((full_min - minute) * 60)
+    Returns:
+    - str: The longitude in degrees, minutes, and seconds format (e.g., "35° 30' 15").
+    """
+    sign_num = int(longitude // 30)
+    pos_in_sign = longitude - (sign_num * 30)
+    deg = int(pos_in_sign)
+    full_min = (pos_in_sign - deg) * 60
+    minute = int(full_min)
+    full_sec = round((full_min - minute) * 60)
 
-        deg = "{:02d}".format(deg)
-        minute = "{:02d}".format(minute)
-        full_sec = "{:02d}".format(full_sec)
+    deg = "{:02d}".format(deg)
+    minute = "{:02d}".format(minute)
+    full_sec = "{:02d}".format(full_sec)
 
-        return f"{deg}° {minute}' {full_sec}"
+    return f"{deg}° {minute}' {full_sec}"
 
 
 

@@ -210,6 +210,9 @@ class House(GenericObject):
     def num(self):
         """ Returns the number of this house [1..12]. """
         return int(self.id[5:])
+    
+    def name(self):
+        return props.house.names[self.id]
 
     def condition(self):
         """ Returns the condition of this house. 
