@@ -72,9 +72,15 @@ class GeoPos:
     """
 
     def __init__(self, lat, lon):
-        self.lat = toFloat(lat)
-        self.lon = toFloat(lon)
-
+        if isinstance(lat, float) and isinstance(lon, float):
+            self.lat = lat
+            self.lon = lon
+        elif isinstance(lat, str) and isinstance(lon, str):
+            self.lat = toFloat(lat)
+            self.lon = toFloat(lon)
+        else:
+            raise ValueError("invalid coardinates, must be decimal number or string format like 22n22, 5e28")
+        
     def slists(self):
         """ Return lat/lon as signed lists. """
         return [
