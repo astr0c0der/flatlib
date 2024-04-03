@@ -17,6 +17,7 @@ from . import tools
 from flatlib import angle
 from flatlib import const
 from flatlib import utils
+from flatlib.geopos import GeoPos
 
 
 # === Objects === #

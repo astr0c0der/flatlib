@@ -82,11 +82,14 @@ def sweObjectLon(obj, jd):
 def sweNextTransit(obj, jd, lat, lon, flag):
     """ Returns the julian date of the next transit of
     an object. The flag should be 'RISE' or 'SET'. 
-    
     """
+    # geopos/rsmi are needed for newer version of swisseph
+    geopos = (lon, lat, 0)
+    rsmi = swisseph.CALC_SET | swisseph.BIT_DISC_CENTER | swisseph.BIT_NO_REFRACTION
+
     sweObj = SWE_OBJECTS[obj]
     flag = swisseph.CALC_RISE if flag == 'RISE' else swisseph.CALC_SET
-    trans = swisseph.rise_trans(jd, sweObj, lon, lat, 0, 0, 0, flag)
+    trans = swisseph.rise_trans(jd, sweObj, rsmi, geopos, flag)
     return trans[1][0]
 
 
@@ -94,7 +97,12 @@ def sweNextTransit(obj, jd, lat, lon, flag):
 
 def sweHouses(jd, lat, lon, hsys):
     """ Returns lists of houses and angles. """
-    hsys = SWE_HOUSESYS[hsys]
+    
+    if isinstance(hsys, str) and len(hsys) == 1:
+        hsys = hsys.encode('utf-8')
+    else:
+        hsys = SWE_HOUSESYS[hsys]
+    
     hlist, ascmc = swisseph.houses(jd, lat, lon, hsys)
     # Add first house to the end of 'hlist' so that we
     # can compute house sizes with an iterator 

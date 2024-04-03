@@ -6,7 +6,7 @@
     planetary times.
 
 """
-
+from flatlib import const
 from flatlib.datetime import Datetime
 from flatlib.geopos import GeoPos
 from flatlib.tools import planetarytime
