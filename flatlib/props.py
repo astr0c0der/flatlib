@@ -322,7 +322,7 @@ class house:
         const.HOUSE4, const.HOUSE5, const.HOUSE6
     ]
 
-    names = {
+    houseNames = {
         const.HOUSE1: const.FIRSTHOUSE,
         const.HOUSE2: const.SECONDHOUSE,
         const.HOUSE3: const.THIRDHOUSE,

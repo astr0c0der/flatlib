@@ -243,8 +243,8 @@ BIQUINTILE = 144
 QUINCUNX = 150
 
 # Aspect movement
-APPLICATIVE = 'Applicative'
-SEPARATIVE = 'Separative'
+APPLICATIVE = 'Applying'
+SEPARATIVE = 'Separating'
 EXACT = 'Exact'
 NO_MOVEMENT = 'None'
 

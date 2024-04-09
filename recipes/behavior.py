@@ -15,8 +15,8 @@ from flatlib.protocols import behavior
 
 
 # Build a chart for a date and location
-date = Datetime('2015/03/13', '17:00', '+00:00')
-pos = GeoPos('38n32', '8w54')
+date = Datetime('1984/06/23', '07:51', '+00:00')
+pos = GeoPos('32n22', '6w27')
 chart = Chart(date, pos)
 
 # Behavior

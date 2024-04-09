@@ -177,6 +177,11 @@ class Object(GenericObject):
     def isFast(self):
         """ Returns if this object is in fast motion. """
         return abs(self.lonspeed) >= self.meanMotion()
+    
+    def objectInHouse(self):
+        """ Returns the house of an object. """
+        return House.inHouse(self.lon)
+        
 
 
 
@@ -211,8 +216,8 @@ class House(GenericObject):
         """ Returns the number of this house [1..12]. """
         return int(self.id[5:])
     
-    def name(self):
-        return props.house.names[self.id]
+    def houseName(self):
+        return props.house.houseNames[self.id]
 
     def condition(self):
         """ Returns the condition of this house. 
@@ -229,7 +234,6 @@ class House(GenericObject):
 
         return props.house.element[self.id]
         
-
     # === Functions === #
 
     def isAboveHorizon(self):
