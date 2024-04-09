@@ -98,7 +98,7 @@ class Date:
         return sign + string
 
     def __str__(self):
-        return '<%s>' % self.toString()
+        return '%s' % self.toString()
 
 
 # ------------------ #
@@ -151,7 +151,7 @@ class Time:
         return string if slist[0] == '-' else string[1:]
 
     def __str__(self):
-        return '<%s>' % self.toString()
+        return '%s' % self.toString()
 
 
 # ------------------ #
@@ -207,6 +207,6 @@ class Datetime:
         return Datetime(dateUTC, timeUTC)
 
     def __str__(self):
-        return '<%s %s %s>' % (self.date.toString(),
+        return '%s %s %s' % (self.date.toString(),
                                self.time.toString(),
                                self.utcoffset.toString())

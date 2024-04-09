@@ -32,7 +32,7 @@ chart = Chart(date, pos, IDs=const.LIST_OBJECTS)
 # dms = decimal to dms 
 # movement = planet movement
 sun = chart.getObject(const.SUN)
-print(f"Sun: {sun.objectInHouse(sun)}")
+
 print (f""" 
     Sun: {sun.id} 
          {sun.lon}
@@ -45,11 +45,11 @@ print (f"""
          {sun.orb()}
          {sun.element()}
          {sun.inElement()}
-         {sun.objectInHouse(sun)}
+         {sun.objectInHouse()}
          
 
 """)
 
 
 for obj in chart.objects:
-    print (f"{obj.id}: name: {obj.id} \n longitude {obj.lon} \n latitude {obj.lat} \n sign {obj.sign} \n longitude in sign{obj.signlon} \n longitude speed: {obj.lonspeed} \n planet element: {obj.element()} \n sign element: {obj.inElement()}  in house {obj.objectInHouse(obj)} \n")
+    print (f"{obj.id}: name: {obj.id} \n longitude {obj.lon} \n latitude {obj.lat} \n sign {obj.sign} \n longitude in sign{obj.signlon} \n longitude speed: {obj.lonspeed} \n planet element: {obj.element()} \n sign element: {obj.inElement()}  in house {obj.objectInHouse()} \n")

@@ -16,7 +16,6 @@ for hse in const.LIST_HOUSES:
     house = chart.getHouse(hse)
     print(house.id)
     print(house.lon)
-    print(house.houseName)
     print(house.lat)
     print(house.sign)
     print(house.inElement())

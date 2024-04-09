@@ -113,6 +113,7 @@ class Object(GenericObject):
         self.type = const.OBJ_PLANET
         self.lonspeed = 0.0
         self.latspeed = 0.0
+        self.houses = House()
 
     def __str__(self):
         string = super().__str__()[:-1]
@@ -180,7 +181,7 @@ class Object(GenericObject):
     
     def objectInHouse(self):
         """ Returns the house of an object. """
-        return House.inHouse(self.lon)
+        return self.houses.inHouse(self.lon)
         
 
 

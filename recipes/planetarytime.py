@@ -13,7 +13,7 @@ from flatlib.tools import planetarytime
 
 
 # Build a date and location
-date = Datetime('2015/03/13', '17:00', '+00:00')
+date = Datetime('2015/03/13', '14:00', '+00:00')
 pos = GeoPos('38n32', '8w54')
 
 # Get the planetary hour table
