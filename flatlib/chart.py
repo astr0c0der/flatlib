@@ -69,6 +69,26 @@ class Chart:
     def getObject(self, ID):
         """ Returns an object from the chart. """
         return self.objects.get(ID)
+    
+    def getObjectWithHouse(self, ID):
+        """ Returns an object from the chart, with house position enriched. """
+        obj = self.objects.get(ID)
+        if obj:
+            self._attachHouseToObj(obj)
+        return obj
+    
+    def _attachHouseToObj(self, obj):
+        """ Private method to attach a house to the object if it belongs to any. """
+        for house in self.houses:
+            if house.hasObject(obj):  # Assuming hasObject correctly determines if the object is within the house
+                obj.house = house  # Or house.id if you prefer storing just the ID
+                break
+    
+    def getObjects(self):
+        return self.objects
+    
+    def getNextTransit():
+        pass
 
     def getHouse(self, ID):
         """ Returns an house from the chart. """
@@ -162,4 +182,3 @@ class Chart:
                         self.date.utcoffset)
         srDate = ephem.nextSolarReturn(date, sun.lon)
         return Chart(srDate, self.pos, hsys=self.hsys)
-    

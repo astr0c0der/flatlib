@@ -213,7 +213,7 @@ class object:
     # Object orbs
     orb = {
         const.NO_PLANET: 0,
-        const.SUN: 15,
+        const.SUN: 12,
         const.MOON: 12,
         const.MERCURY: 7,
         const.VENUS: 7,
@@ -228,6 +228,24 @@ class object:
         const.SOUTH_NODE: 12,
         const.SYZYGY: 0,
         const.PARS_FORTUNA: 0
+    }
+
+    glyphs = {
+        const.SUN: '☉',         # Sun symbol
+        const.MOON: '☽',        # Moon symbol
+        const.MERCURY: '☿',     # Mercury symbol
+        const.VENUS: '♀',       # Venus symbol
+        const.MARS: '♂',        # Mars symbol
+        const.JUPITER: '♃',     # Jupiter symbol
+        const.SATURN: '♄',      # Saturn symbol
+        const.URANUS: '♅',      # Uranus symbol
+        const.NEPTUNE: '♆',     # Neptune symbol
+        const.PLUTO: '♇',       # Pluto symbol
+        const.CHIRON: '⚷',      # Chiron symbol (note: not universally standardized)
+        const.NORTH_NODE: '☊',  # North Node symbol (Caput Draconis or Dragon's Head)
+        const.SOUTH_NODE: '☋',  # South Node symbol (Cauda Draconis or Dragon's Tail)
+        const.SYZYGY: '☽☌☉',    # Syzygy symbol, combining the Moon and Sun conjunction
+        const.PARS_FORTUNA: '⊗',  # Part of Fortune, often represented with a circle with an 'x' through it
     }
 
     # Planet elements

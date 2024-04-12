@@ -57,14 +57,16 @@ Some of the available functions are::
 
    >>> sun.orb()
    15
-   >>> sun.meanMotion()
+   >>> sun.mean_motion()
    0.9833
    >>> sun.movement()
    'Direct'
    >>> sun.gender()
    'Masculine'
-   >>> sun.element()
+   >>> sun.element_of_planet()
    'Fire'
+   >>> sun.element_of_sign()
+   'Earth'
    >>> sun.isFast()
    True
    

@@ -34,9 +34,6 @@ class GenericObject:
         self.sign = const.ARIES
         self.signlon = 0.0
         self.dms = 0
-        
-        
-
     @classmethod
     def fromDict(cls, _dict):
         """ Builds instance from dictionary of properties. """
@@ -111,9 +108,9 @@ class Object(GenericObject):
     def __init__(self):
         super().__init__()
         self.type = const.OBJ_PLANET
+        self.house_id = const.HOUSE1
         self.lonspeed = 0.0
         self.latspeed = 0.0
-        self.houses = House()
 
     def __str__(self):
         string = super().__str__()[:-1]
@@ -151,9 +148,20 @@ class Object(GenericObject):
     def faction(self):
         """ Returns the faction of this object. """
         return props.object.faction[self.id]
+    
+    def temperament(self):
+        """ Return the temperate of sign the object is in. """
+        return props.object.temperament[self.id]
+    
+    def house_of_joy(self):
+        print(props.object.houseJoy[self.id])
+        return props.object.houseJoy[self.id]
+
+    def sign_of_joy(self):
+        return props.object.signJoy[self.id]
 
     def element(self):
-        """ Returns the element of this object. """
+        """ Returns the element of this object its self.. """
         if self.id in const.LIST_SEVEN_PLANETS:
             return props.object.element[self.id] 
     
@@ -178,14 +186,6 @@ class Object(GenericObject):
     def isFast(self):
         """ Returns if this object is in fast motion. """
         return abs(self.lonspeed) >= self.meanMotion()
-    
-    def objectInHouse(self):
-        """ Returns the house of an object. """
-        return self.houses.inHouse(self.lon)
-        
-
-
-
 
 
 

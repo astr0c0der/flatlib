@@ -21,4 +21,5 @@ chart = Chart(date, pos)
 
 # Retrieve the Pars Spirit
 parsSpirit = arabicparts.getPart(arabicparts.PARS_SPIRIT, chart)
+
 print(parsSpirit)    # <Pars Spirit Sagittarius +03:52:01>
