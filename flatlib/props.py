@@ -207,7 +207,8 @@ class object:
         const.CHIRON: 0.00001,
         const.NORTH_NODE: 13.1833,
         const.SOUTH_NODE: 13.1833,
-        const.SYZYGY: 0.0
+        const.SYZYGY: 0.0,
+        const.PARS_FORTUNA:0.0
     }
 
     # Object orbs
@@ -257,6 +258,14 @@ class object:
         const.VENUS: const.AIR,
         const.MERCURY: const.EARTH,
         const.MOON: const.WATER,
+        const.URANUS: const.AIR,
+        const.NEPTUNE: const.WATER,
+        const.PLUTO: const.WATER,
+        const.CHIRON: const.NO_PLANET,
+        const.NORTH_NODE: const.NO_PLANET,
+        const.SOUTH_NODE: const.NO_PLANET,
+        const.SYZYGY: const.NO_PLANET,
+        const.PARS_FORTUNA: const.NO_PLANET
     }
 
     # Planet temperaments
@@ -267,7 +276,16 @@ class object:
         const.SUN: const.CHOLERIC,
         const.VENUS: const.SANGUINE,
         const.MERCURY: const.MELANCHOLIC,
-        const.MOON: const.PHLEGMATIC
+        const.MOON: const.PHLEGMATIC,
+        const.URANUS: const.CHOLERIC,
+        const.NEPTUNE: const.PHLEGMATIC,
+        const.PLUTO: const.MELANCHOLIC,
+        const.CHIRON: const.NO_PLANET,
+        const.NORTH_NODE: const.NO_PLANET,
+        const.SOUTH_NODE: const.NO_PLANET,
+        const.SYZYGY: const.NO_PLANET,
+        const.PARS_FORTUNA: const.NO_PLANET
+
     }
 
     # Planet genders
@@ -278,7 +296,15 @@ class object:
         const.SUN: const.MASCULINE,
         const.VENUS: const.FEMININE,
         const.MERCURY: const.NEUTRAL,
-        const.MOON: const.FEMININE
+        const.MOON: const.FEMININE,
+        const.URANUS: const.NEUTRAL,  # Often seen as breaking traditional boundaries, including gender
+        const.NEPTUNE: const.NEUTRAL,  # Associated with universal or collective aspects transcending gender
+        const.PLUTO: const.NEUTRAL,  # Power and transformation are beyond traditional gender roles
+        const.CHIRON: const.NO_PLANET,
+        const.NORTH_NODE: const.NO_PLANET,
+        const.SOUTH_NODE: const.NO_PLANET,
+        const.SYZYGY: const.NO_PLANET,
+        const.PARS_FORTUNA: const.NO_PLANET
     }
 
     # Planet factions
@@ -289,7 +315,15 @@ class object:
         const.SUN: const.DIURNAL,
         const.VENUS: const.NOCTURNAL,
         const.MERCURY: const.NEUTRAL,
-        const.MOON: const.NOCTURNAL
+        const.MOON: const.NOCTURNAL,
+        const.URANUS: const.DIURNAL,  # Associated with the sky and heavens, often active
+        const.NEPTUNE: const.NOCTURNAL,  # Mystical and elusive, linked to the subconscious
+        const.PLUTO: const.NOCTURNAL,  # Underworld connections suggest a more hidden, night-related nature
+        const.CHIRON: const.NO_PLANET,
+        const.NORTH_NODE: const.NO_PLANET,
+        const.SOUTH_NODE: const.NO_PLANET,
+        const.SYZYGY: const.NO_PLANET,
+        const.PARS_FORTUNA: const.NO_PLANET
     }
 
     # Sign joy of planets
@@ -300,9 +334,16 @@ class object:
         const.SUN: const.LEO,
         const.VENUS: const.TAURUS,
         const.MERCURY: const.VIRGO,
-        const.MOON: const.CANCER
+        const.MOON: const.CANCER,
+        const.URANUS: const.AQUARIUS,  # Joy for Uranus
+        const.NEPTUNE: const.PISCES,  # Joy for Neptune
+        const.PLUTO: const.SCORPIO,    # Joy for Pluto
+        const.CHIRON: const.NO_PLANET,
+        const.NORTH_NODE: const.NO_PLANET,
+        const.SOUTH_NODE: const.NO_PLANET,
+        const.SYZYGY: const.NO_PLANET,
+        const.PARS_FORTUNA: const.NO_PLANET
     }
-
     # House joy of planets
     houseJoy = {
         const.SATURN: const.HOUSE12,
@@ -311,7 +352,15 @@ class object:
         const.SUN: const.HOUSE9,
         const.VENUS: const.HOUSE5,
         const.MERCURY: const.HOUSE1,
-        const.MOON: const.HOUSE3
+        const.MOON: const.HOUSE3,
+        const.URANUS: const.HOUSE11,  # House of friendships and collective endeavors
+        const.NEPTUNE: const.HOUSE12,  # House of solitude and hidden matters
+        const.PLUTO: const.HOUSE8,  # House of transformation and shared resources
+        const.CHIRON: const.NO_PLANET,
+        const.NORTH_NODE: const.NO_PLANET,
+        const.SOUTH_NODE: const.NO_PLANET,
+        const.SYZYGY: const.NO_PLANET,
+        const.PARS_FORTUNA: const.NO_PLANET
     }
 
 

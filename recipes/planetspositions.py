@@ -34,8 +34,6 @@ chart = Chart(date, pos, IDs=const.LIST_OBJECTS)
 # condition is angular, cadent, succedant
 sun = chart.getObject(const.SUN)
 
-
-
 print (f""" 
     Sun: {sun.id} 
          {sun.lon}
@@ -50,3 +48,24 @@ print (f"""
          {sun.inElement()}
          {sun.isFast()}
 """)
+
+## for all objects do
+for object_id in const.LIST_OBJECTS:
+
+    obj = chart.getObject(object_id)
+
+    print (f""" 
+        {obj.id}: {obj.id} 
+            {obj.lon}
+            {obj.lat}
+            {obj.sign}
+            {obj.signlon}
+            {obj.lonspeed}
+            {obj.dms}
+            {obj.movement()}
+            {obj.orb()}
+            {obj.element()}
+            {obj.temperament()}
+            {obj.inElement()}
+    """)
+

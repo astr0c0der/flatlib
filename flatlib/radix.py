@@ -1,12 +1,21 @@
+"""
+    Author: Gert-jan Poortman <flatangleweb@gmail.com>
+    
+    Draws the radix wheel using madplot library. 
+
+"""
+
 import os
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 from flatlib.datetime import Datetime
 from flatlib.geopos import GeoPos
 from flatlib.chart import Chart
 from flatlib import const
+from datetime import datetime
+import uuid
 
-class DrawChart:
+class AstroChart:
 
     def __init__(self, chart: Chart):
         self.chart = chart
@@ -20,7 +29,6 @@ class DrawChart:
         self._draw_cusps()
         self._draw_signs()
         self._draw_planets()
-        self._draw_house_cusp_degrees()
         self._draw_inner_circle_marks()
         self._draw_house_numbers()
 
@@ -32,11 +40,13 @@ class DrawChart:
         return fig, ax
     
     def dec2dms(self, longitude):
+
         zodiac_signs = [
             '\u2648', '\u2649', '\u264A', '\u264B',
             '\u264C', '\u264D', '\u264E', '\u264F',
             '\u2650', '\u2651', '\u2652', '\u2653'
         ]
+
         sign_num = int(longitude // 30)
         pos_in_sign = longitude - (sign_num * 30)
         deg = int(pos_in_sign)
@@ -81,34 +91,35 @@ class DrawChart:
         for circle in circles:
             self.ax.add_artist(circle)
 
-    def _draw_house_cusp_degrees(self):
-        for cusp in const.LIST_HOUSES:
-            house_obj = self.chart.houses.get(cusp)
-            cusp_degree = house_obj.lon
-            cusp_radian = np.deg2rad(cusp_degree)
-            rotated_radian = self._rotate_angle(cusp_radian)  # Apply rotation based on Ascendant
+        """    def _draw_house_cusp_degrees(self):
+                for cusp in const.LIST_HOUSES:
+                    house_obj = self.chart.houses.get(cusp)
+                    cusp_degree = house_obj.lon
+                    cusp_radian = np.deg2rad(cusp_degree)
+                    rotated_radian = self._rotate_angle(cusp_radian)  # Apply rotation based on Ascendant
 
-            line_start_x = self.outer_radius * np.cos(rotated_radian)
-            line_start_y = self.outer_radius * np.sin(rotated_radian)
-            line_end_x = (self.outer_radius + 0.15) * np.cos(rotated_radian)
-            line_end_y = (self.outer_radius + 0.15) * np.sin(rotated_radian)
-            text_x = (self.outer_radius + 0.35) * np.cos(rotated_radian)
-            text_y = (self.outer_radius + 0.35) * np.sin(rotated_radian)
+                    line_start_x = self.outer_radius * np.cos(rotated_radian)
+                    line_start_y = self.outer_radius * np.sin(rotated_radian)
+                    line_end_x = (self.outer_radius + 0.15) * np.cos(rotated_radian)
+                    line_end_y = (self.outer_radius + 0.15) * np.sin(rotated_radian)
+                    text_x = (self.outer_radius + 0.35) * np.cos(rotated_radian)
+                    text_y = (self.outer_radius + 0.35) * np.sin(rotated_radian)
 
-            if house_obj.id == const.HOUSE1 or house_obj.id == const.HOUSE4 or house_obj.id == const.HOUSE7 or house_obj.id == const.HOUSE10:
-                self.ax.plot([line_start_x, line_end_x], [line_start_y, line_end_y], color='black', lw=1)
-                text_rotation = np.degrees(rotated_radian) if -np.pi/2 <= rotated_radian <= np.pi/2 else np.degrees(rotated_radian) + 180
+                    if house_obj.id == const.HOUSE1 or house_obj.id == const.HOUSE4 or house_obj.id == const.HOUSE7 or house_obj.id == const.HOUSE10:
+                        self.ax.plot([line_start_x, line_end_x], [line_start_y, line_end_y], color='black', lw=1)
+                        text_rotation = np.degrees(rotated_radian) if -np.pi/2 <= rotated_radian <= np.pi/2 else np.degrees(rotated_radian) + 180
 
-                # Convert degrees to DMS format
-                cusp_dms = self.dec2dms(cusp_degree)
+                        # Convert degrees to DMS format
+                        cusp_dms = self.dec2dms(cusp_degree)
 
-                self.ax.text(text_x, text_y, f"{cusp_dms}",
-                            horizontalalignment='center',
-                            verticalalignment='center',
-                            fontsize=10,
-                            rotation=text_rotation,
-                            rotation_mode='anchor')
-            
+                        self.ax.text(text_x, text_y, f"{cusp_dms}",
+                                    horizontalalignment='center',
+                                    verticalalignment='center',
+                                    fontsize=10,
+                                    rotation=text_rotation,
+                                    rotation_mode='anchor')
+        """
+
     def _draw_signs(self):
         zodiac_signs = [
             '\u2648', '\u2649', '\u264A', '\u264B',
@@ -261,7 +272,7 @@ class DrawChart:
             end_x, end_y = self.inner_radius * np.cos(angle), self.inner_radius * np.sin(angle)
             self.ax.plot([start_x, end_x], [start_y, end_y], color='black', lw=1)
 
-    def save_plot(self, filename, format='png', dpi=300, bbox_inches='tight', path=None):
+    def save_plot(self, path=None, format='png', dpi=300, bbox_inches='tight'):
         """
         Save the plot to a file with various customizable parameters.
 
@@ -272,19 +283,28 @@ class DrawChart:
         - bbox_inches: set to 'tight' to cut out extra whitespace around the plot or None to keep the default
         - path: directory path where the file will be saved (optional)
         """
+
+        # Use unique id as filename instead of user-provided filename
+        unique_id = str(uuid.uuid4())
+        filename = f"{unique_id}.{format}"
+
         if path:
             full_filename = os.path.join(path, filename)
         else:
             full_filename = filename
-        
-        self.fig.savefig(full_filename, format=format, dpi=dpi, bbox_inches=bbox_inches)
+        self.ax.set_axis_off()  
+        self.fig.savefig(full_filename, format=format, dpi=dpi)
         print(f"Plot saved as '{full_filename}' with resolution {dpi} DPI.")
+
+        return f"http://127.0.0.1:7860/file=static/cache/{filename}"
 
     def show(self):
         self.ax.set_axis_off()
         plt.show()
+
+
 geo = GeoPos('52n22', '6w27')
-datetime = Datetime('1984/06/23', '07:51', '+02:00')
-chart = Chart(datetime, geo, IDs=const.LIST_OBJECTS, hsys=const.HOUSES_PLACIDUS)
-astro_chart = DrawChart(chart)
+dateobj = RadixDate('1984/06/23', '07:51', '+02:00')
+chart = Chart(dateobj, geo, IDs=const.LIST_OBJECTS, hsys=const.HOUSES_PLACIDUS)
+astro_chart = AstroChart(chart)
 astro_chart.show()

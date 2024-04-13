@@ -84,9 +84,6 @@ class Chart:
                 obj.house = house  # Or house.id if you prefer storing just the ID
                 break
     
-    def getObjects(self):
-        return self.objects
-    
     def getNextTransit():
         pass
 
