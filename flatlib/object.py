@@ -13,6 +13,7 @@ from . import const
 from . import angle
 from . import utils
 from . import props
+import logging
 
 
 # ------------------ #
@@ -261,33 +262,25 @@ class FixedStar(GenericObject):
     def __init__(self):
         super().__init__()
         self.type = const.OBJ_FIXED_STAR
-        self.mag = 0.0
+        self.mag = 0.0  # Default magnitude
 
     def __str__(self):
         string = super().__str__()[:-1]
-        return '%s %s' % (
-            string,
-            self.mag
-        )
+        return f'{string} {self.mag}'
 
-    # === Properties === #
-
-    # Map magnitudes to orbs
-    _ORBS = [[2, 7.5], [3, 5.5], [4, 3.5], [5, 1.5]]
+    _ORB_MAP = {2: 7.5, 3: 5.5, 4: 3.5, 5: 1.5}
 
     def orb(self):
-        """ Returns the orb of this fixed star. """
-        for (mag, orb) in FixedStar._ORBS:
-            if self.mag < mag:
-                return orb
-        return 0.5
-
-    # === Functions === #
+        try:
+            mag_key =self.mag
+            return self._ORB_MAP.get(mag_key, 0.5)
+        except ValueError as e:
+            logging.error(f"Failed to convert magnitude to float for {self.id} with mag value {self.mag}: {e}")
+            return 0.5  # Return a default orb value
 
     def aspects(self, obj):
-        """ Returns true if this star aspects another object.
-        Fixed stars only aspect by conjunctions. 
-        
-        """
-        dist = angle.closestdistance(self.lon, obj.lon)
-        return abs(dist) < self.orb()
+        """ Check if this fixed star is in conjunction with another object within its orb. """
+        if self.lon and obj.lon:  # Ensure longitude is available
+            dist = angle.closestdistance(self.lon, obj.lon)
+            return abs(dist) < self.orb()
+        return False

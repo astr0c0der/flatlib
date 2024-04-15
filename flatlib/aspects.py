@@ -63,21 +63,8 @@ def _aspectDict(obj1, obj2, aspList):
     """ Returns the properties of the aspect of 
     obj1 to obj2, considering a list of possible
     aspects.
-    
-    This function makes the following assumptions:
-    - Syzygy does not start aspects but receives 
-      any aspect.
-    - Pars Fortuna and Moon Nodes only starts 
-      conjunctions but receive any aspect.
-    - All other objects can start and receive
-      any aspect.
-      
-    Note: this function returns the aspect
-    even if it is not within the orb of obj1
-    (but is within the orb of obj2).
-    
     """
-    # Ignore aspects from same and Syzygy
+    # Ignore aspects from the same object or Syzygy
     if obj1 == obj2 or obj1.id == const.SYZYGY:
         return None
 
@@ -86,21 +73,21 @@ def _aspectDict(obj1, obj2, aspList):
         asp = aspDict['type']
         orb = aspDict['orb']
 
+        # Fixed stars only allow for conjunctions
+        if obj1.type == const.OBJ_FIXED_STAR or obj2.type == const.OBJ_FIXED_STAR:
+            if asp != const.CONJUNCTION:
+                continue
+
         # Check if aspect is within orb
         if asp in const.MAJOR_ASPECTS:
-            # Ignore major aspects out of orb
             if obj1.orb() < orb and obj2.orb() < orb:
                 continue
         else:
-            # Ignore minor aspects out of max orb
             if MAX_MINOR_ASP_ORB < orb:
                 continue
 
         # Only conjunctions for Pars Fortuna and Nodes
-        if obj1.id in [const.PARS_FORTUNA,
-                       const.NORTH_NODE,
-                       const.SOUTH_NODE] and \
-                asp != const.CONJUNCTION:
+        if obj1.id in [const.PARS_FORTUNA, const.NORTH_NODE, const.SOUTH_NODE] and asp != const.CONJUNCTION:
             continue
 
         # We have a valid aspect within orb
@@ -109,34 +96,26 @@ def _aspectDict(obj1, obj2, aspList):
     return None
 
 def _aspectProperties(obj1, obj2, aspDict):
-    """ Returns the properties of an aspect between
-    obj1 and obj2, given by 'aspDict'. 
-    
-    This function assumes obj1 to be the active object, 
-    i.e., the one responsible for starting the aspect.
-    
-    """
     orb = aspDict['orb']
     asp = aspDict['type']
     sep = aspDict['separation']
 
-    # Properties
     prop1 = {
         'id': obj1.id,
-        'inOrb': False,
+        'inOrb': orb <= obj1.orb(),
         'movement': const.NO_MOVEMENT
     }
     prop2 = {
         'id': obj2.id,
-        'inOrb': False,
+        'inOrb': orb <= obj2.orb(),
         'movement': const.NO_MOVEMENT
     }
     prop = {
         'type': asp,
         'name': aspectName(asp),
         'orb': orb,
-        'direction': -1,
-        'condition': -1,
+        'direction': const.DEXTER if sep <= 0 else const.SINISTER,
+        'condition': const.DISSOCIATE,
         'active': prop1,
         'passive': prop2
     }
@@ -144,62 +123,48 @@ def _aspectProperties(obj1, obj2, aspDict):
     if asp == const.NO_ASPECT:
         return prop
 
-    # Aspect within orb
-    prop1['inOrb'] = orb <= obj1.orb()
-    prop2['inOrb'] = orb <= obj2.orb()
-
-    # Direction
-    prop['direction'] = const.DEXTER if sep <= 0 else const.SINISTER
-
-    # Sign conditions
-    # Note: if obj1 is before obj2, orbDir will be less than zero
+    # Calculate sign conditions
     orbDir = sep - asp if sep >= 0 else sep + asp
     offset = obj1.signlon + orbDir
     if 0 <= offset < 30:
         prop['condition'] = const.ASSOCIATE
-    else:
-        prop['condition'] = const.DISSOCIATE
 
-        # Movement of the individual objects
+    # Check if obj1 and obj2 have specific methods before calling them
+    if hasattr(obj1, 'isDirect') and hasattr(obj1, 'isRetrograde') and hasattr(obj1, 'isStationary'):
+        apply_movement_logic(obj1, obj2, prop1, prop2, orbDir)
+    else:
+        prop1['movement'] = const.NO_MOVEMENT
+
+    return prop
+
+def apply_movement_logic(obj1, obj2, prop1, prop2, orbDir):
+    # Standard movement calculations
     if abs(orbDir) < MAX_EXACT_ORB:
         prop1['movement'] = prop2['movement'] = const.EXACT
     else:
-        # Active object applies to Passive if it is before 
-        # and direct, or after the Passive and Rx..
         prop1['movement'] = const.SEPARATIVE
-        if (orbDir > 0 and obj1.isDirect()) or \
-                (orbDir < 0 and obj1.isRetrograde()):
+        if (orbDir > 0 and obj1.isDirect()) or (orbDir < 0 and obj1.isRetrograde()):
             prop1['movement'] = const.APPLICATIVE
         elif obj1.isStationary():
             prop1['movement'] = const.STATIONARY
 
-        # The Passive applies or separates from the Active 
-        # if it has a different direction..
-        # Note: Non-planets have zero speed
-        prop2['movement'] = const.NO_MOVEMENT
-        obj2speed = obj2.lonspeed if obj2.isPlanet() else 0.0
-        sameDir = obj1.lonspeed * obj2speed >= 0
-        if not sameDir:
-            prop2['movement'] = prop1['movement']
-
-    return prop
+        # Handle movement logic for obj2
+        if hasattr(obj2, 'isPlanet') and obj2.isPlanet():
+            obj2speed = obj2.lonspeed
+            sameDir = obj1.lonspeed * obj2speed >= 0
+            if not sameDir:
+                prop2['movement'] = prop1['movement']
 
 
 def _getActivePassive(obj1, obj2):
-    """ Returns which is the active and the passive objects. """
-    speed1 = abs(obj1.lonspeed) if obj1.isPlanet() else -1.0
-    speed2 = abs(obj2.lonspeed) if obj2.isPlanet() else -1.0
-    if speed1 > speed2:
-        return {
-            'active': obj1,
-            'passive': obj2
-        }
-    else:
-        return {
-            'active': obj2,
-            'passive': obj1
-        }
+    """ Returns which is the active and the passive objects, handling cases where objects may not be planets. """
+    speed1 = 0 if not hasattr(obj1, 'isPlanet') else abs(obj1.lonspeed) if obj1.isPlanet() else -1.0
+    speed2 = 0 if not hasattr(obj2, 'isPlanet') else abs(obj2.lonspeed) if obj2.isPlanet() else -1.0
 
+    if speed1 > speed2:
+        return {'active': obj1, 'passive': obj2}
+    else:
+        return {'active': obj2, 'passive': obj1}
 
 # === Public functions === #
 
@@ -252,18 +217,42 @@ def getAspect(obj1, obj2, aspList):
     aspProp = _aspectProperties(ap['active'], ap['passive'], aspDict)
     return Aspect(aspProp)
 
+def getStarConjunction(obj1, obj2, max_orb=1.0):
+    """Calculate conjunctions between a fixed star and another object.
+
+    Args:
+        obj1 (Object): The first object, possibly a fixed star.
+        obj2 (Object): The second object.
+        max_orb (float): The maximum orb allowed for the conjunction.
+
+    Returns:
+        dict or None: Returns aspect details if a conjunction exists; otherwise, None.
+    """
+    if obj1.id == obj2.id:
+        return None  # Avoid aspecting itself
+    
+    separation = angle.closestdistance(obj1.lon, obj2.lon)
+    if abs(separation) <= max_orb:
+        return {
+            'type': 'Conjunction',
+            'objects': (obj1.id, obj2.id),
+            'separation': separation,
+            'orb': max_orb
+        }
+    return None
+
 def getAllAspects(objList, aspList):
-    aspect_list=[]
-    for obj1 in objList: # creates main loop for the first planet
-        for obj2 in objList: # a nested loop for the second planet. # create planet object 2        
-            if obj1 == obj2: # check for not aspecting itself, else continue
-                continue
-
-            asp = getAspect(obj1, obj2, aspList) # calculate aspect
-            if asp.type != const.NO_ASPECT: # If result is not -1, its bingo we have an aspect.
-                aspect_list.append(asp) # printing our results
+    aspect_list = []
+    for obj1 in objList.values():  # Ensure that objList is a dictionary of object instances
+        for obj2 in objList.values():
+            if not hasattr(obj1, 'id') or not hasattr(obj2, 'id'):
+                raise TypeError(f"Expected object with 'id', but got {type(obj1)} and {type(obj2)}")
+            if obj1 == obj2:
+                continue  # skip same object comparison
+            aspect = getAspect(obj1, obj2, aspList)
+            if aspect and aspect.exists():
+                aspect_list.append(aspect)
     return aspect_list
-
 
 # ---------------- #
 #   Aspect Class   #

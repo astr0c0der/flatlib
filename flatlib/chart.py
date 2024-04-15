@@ -46,12 +46,23 @@ class Chart:
         # Handle optional arguments
         hsys = kwargs.get('hsys', const.HOUSES_DEFAULT)
         IDs = kwargs.get('IDs', const.LIST_OBJECTS_TRADITIONAL)
+        include_fixed_stars = kwargs.get('include_fixed_stars', False)
 
         self.date = date
         self.pos = pos
         self.hsys = hsys
-        self.objects = ephem.getObjectList(IDs, date, pos)
-        self.houses, self.angles = ephem.getHouses(date, pos, hsys)
+        self.objects = {}  # Dictionary to store both planets and fixed stars
+        for id in IDs:
+            self.objects[id] = ephem.getObject(id, self.date, self.pos)
+
+        # Optionally include fixed stars
+        if include_fixed_stars:
+            fixed_star_IDs = kwargs.get('fixed_star_IDs', const.LIST_FIXED_STARS)
+            for id in fixed_star_IDs:
+                self.objects[id] = ephem.getFixedStar(id, self.date)
+
+        self.houses, self.angles = ephem.getHouses(self.date, self.pos, self.hsys)
+
 
     def copy(self):
         """ Returns a deep copy of this chart. """
@@ -83,6 +94,12 @@ class Chart:
             if house.hasObject(obj):  # Assuming hasObject correctly determines if the object is within the house
                 obj.house = house  # Or house.id if you prefer storing just the ID
                 break
+
+    def addFixedStars(self):
+        """ Method to add fixed stars if they were not initially included. """
+        fixed_star_IDs = const.LIST_FIXED_STARS
+        for ID in fixed_star_IDs:
+            self.objects[ID] = ephem.getFixedStar(ID, self.date)
     
     def getNextTransit():
         pass
